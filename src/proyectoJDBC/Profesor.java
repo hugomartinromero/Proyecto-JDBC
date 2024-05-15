@@ -1,29 +1,27 @@
 package proyectoJDBC;
 
-import java.util.ArrayList;
-
 public class Profesor extends Persona {
-	private ArrayList<String> especialidades;
+	private String especialidad;
 
 	public Profesor() {
 		super();
 	}
 
-	public Profesor(String dni, String nombre, String apellidos, String telefono, ArrayList<String> especialidades) {
+	public Profesor(String dni, String nombre, String apellidos, String telefono, String especialidad) {
 		super(dni, nombre, apellidos, telefono);
-		this.especialidades = especialidades;
+		this.especialidad = especialidad;
 	}
 
-	public ArrayList<String> getEspecialidades() {
-		return especialidades;
+	public String getespecialidad() {
+		return especialidad;
 	}
 
-	public void setEspecialidades(ArrayList<String> especialidades) {
-		this.especialidades = especialidades;
+	public void setespecialidad(String especialidad) {
+		this.especialidad = especialidad;
 	}
 
 	@Override
 	public String toString() {
-		return super.toString() + "Profesor [especialidades=" + especialidades + "]";
+		return super.toString() + "Profesor [especialidad=" + especialidad + "]";
 	}
 }

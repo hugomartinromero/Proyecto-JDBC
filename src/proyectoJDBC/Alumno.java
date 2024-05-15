@@ -1,11 +1,9 @@
 package proyectoJDBC;
 
-import java.time.LocalDate;
-
 public class Alumno extends Persona {
-	private LocalDate fechaNacimiento;
+	private String fechaNacimiento;
 
-	public Alumno(LocalDate fechaNacimiento) {
+	public Alumno(String fechaNacimiento) {
 		super();
 		this.fechaNacimiento = fechaNacimiento;
 	}
@@ -14,16 +12,16 @@ public class Alumno extends Persona {
 		super();
 	}
 
-	public Alumno(String dni, String nombre, String apellidos, String telefono, LocalDate fechaNacimiento) {
+	public Alumno(String dni, String nombre, String apellidos, String telefono, String fechaNacimiento) {
 		super(dni, nombre, apellidos, telefono);
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
-	public LocalDate getFechaNacimiento() {
+	public String getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 
-	public void setFechaNacimiento(LocalDate fechaNacimiento) {
+	public void setFechaNacimiento(String fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
