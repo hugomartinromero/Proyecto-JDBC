@@ -27,6 +27,9 @@ public class Alumno extends Persona {
 
 	@Override
 	public String toString() {
-		return super.toString() + "Alumno [fechaNacimiento=" + fechaNacimiento + "]";
+		String cadena = super.toString();
+		cadena += "\nFecha de nacimiento: " + this.fechaNacimiento;
+		cadena += "\n------------------------------------------";
+		return cadena;
 	}
 }

@@ -1,27 +1,34 @@
 package proyectoJDBC;
 
 public class Profesor extends Persona {
-	private String especialidad;
+	private boolean administrador;
 
 	public Profesor() {
 		super();
 	}
 
-	public Profesor(String dni, String nombre, String apellidos, String telefono, String especialidad) {
+	public Profesor(String dni, String nombre, String apellidos, String telefono, String administrador) {
 		super(dni, nombre, apellidos, telefono);
-		this.especialidad = especialidad;
+		if (administrador.equals("true")) {
+			this.administrador = true;
+		} else {
+			this.administrador = false;
+		}
 	}
 
-	public String getespecialidad() {
-		return especialidad;
+	public boolean getadministrador() {
+		return administrador;
 	}
 
-	public void setespecialidad(String especialidad) {
-		this.especialidad = especialidad;
+	public void setespecialidad(boolean administrador) {
+		this.administrador = administrador;
 	}
 
 	@Override
 	public String toString() {
-		return super.toString() + "Profesor [especialidad=" + especialidad + "]";
+		String cadena = super.toString();
+		cadena += "\nAdministrador: " + this.administrador;
+		cadena += "\n------------------------------------------";
+		return cadena;
 	}
 }

@@ -50,7 +50,11 @@ public abstract class Persona {
 
 	@Override
 	public String toString() {
-		return "Persona [dni=" + dni + ", nombre=" + nombre + ", apellidos=" + apellidos + ", telefono=" + telefono
-				+ "]";
+		String cadena = "\n------------------------------------------";
+		cadena += "\nDNI: " + this.dni;
+		cadena += "\nNombre: " + this.nombre;
+		cadena += "\nApellidos: " + this.apellidos;
+		cadena += "\nTeléfono: " + this.telefono;
+		return cadena;
 	}
 }
