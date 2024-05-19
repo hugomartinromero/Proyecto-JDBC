@@ -1,22 +1,22 @@
 package proyectoJDBC;
 
 public class Modulo {
-	private String codigoModulo;
+	private int codigoModulo;
 	private int numeroHoras;
 	
 	public Modulo() {
 	}
 	
-	public Modulo(String codigoModulo, int numeroHoras) {
+	public Modulo(int codigoModulo, int numeroHoras) {
 		this.codigoModulo = codigoModulo;
 		this.numeroHoras = numeroHoras;
 	}
 
-	public String getCodigoModulo() {
+	public int getCodigoModulo() {
 		return codigoModulo;
 	}
 
-	public void setCodigoModulo(String codigoModulo) {
+	public void setCodigoModulo(int codigoModulo) {
 		this.codigoModulo = codigoModulo;
 	}
 

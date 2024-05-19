@@ -1,26 +1,26 @@
 package proyectoJDBC;
 
 public class Examen {
-	private String idExamen;
+	private int idExamen;
 	private String titulo;
-	private int numeroPreguntas;
-	private int fechaRealizacion;
+	private int tema;
+	private String fechaRealizacion;
 	
 	public Examen() {
 	}
 	
-	public Examen(String idExamen, String titulo, int numeroPreguntas, int fechaRealizacion) {
+	public Examen(int idExamen, String titulo, int tema, String fechaRealizacion) {
 		this.idExamen = idExamen;
 		this.titulo = titulo;
-		this.numeroPreguntas = numeroPreguntas;
+		this.tema = tema;
 		this.fechaRealizacion = fechaRealizacion;
 	}
 
-	public String getIdExamen() {
+	public int getIdExamen() {
 		return idExamen;
 	}
 
-	public void setIdExamen(String idExamen) {
+	public void setIdExamen(int idExamen) {
 		this.idExamen = idExamen;
 	}
 
@@ -32,25 +32,25 @@ public class Examen {
 		this.titulo = titulo;
 	}
 
-	public int getNumeroPreguntas() {
-		return numeroPreguntas;
+	public int getTema() {
+		return tema;
 	}
 
-	public void setNumeroPreguntas(int numeroPreguntas) {
-		this.numeroPreguntas = numeroPreguntas;
+	public void setTema(int tema) {
+		this.tema = tema;
 	}
 
-	public int getFechaRealizacion() {
+	public String getFechaRealizacion() {
 		return fechaRealizacion;
 	}
 
-	public void setFechaRealizacion(int fechaRealizacion) {
+	public void setFechaRealizacion(String fechaRealizacion) {
 		this.fechaRealizacion = fechaRealizacion;
 	}
 
 	@Override
 	public String toString() {
-		return "Examen [idExamen=" + idExamen + ", titulo=" + titulo + ", numeroPreguntas=" + numeroPreguntas
+		return "Examen [idExamen=" + idExamen + ", titulo=" + titulo + ", tema=" + tema
 				+ ", fechaRealizacion=" + fechaRealizacion + "]";
 	}
 }

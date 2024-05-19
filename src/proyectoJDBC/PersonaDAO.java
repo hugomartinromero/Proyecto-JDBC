@@ -10,7 +10,7 @@ public class PersonaDAO {
 	private Connection conexion;
 
 	private final String USUARIO = "root";
-	private final String PASSWORD = "root";
+	private final String PASSWORD = "0100";
 	private final String MAQUINA = "localhost";
 	private final String BD = "proyectoJDBC";
 
@@ -47,7 +47,6 @@ public class PersonaDAO {
 					String fechaNacimientoAlumno = alumno.getString(5);
 					
 					Alumno alumnoActual = new Alumno(dniAlumno, nombreAlumno, apellidosAlumno, telefonoAlumno, fechaNacimientoAlumno);
-					System.out.println("La persona con dni " + dni + " se ha encontrado.");
 					
 					return alumnoActual;
 				} else {
@@ -79,7 +78,6 @@ public class PersonaDAO {
 					String administradorProfesor = profesor.getString(5);
 					
 					Profesor profesorActual = new Profesor(dniProfesor, nombreProfesor, apellidosProfesor, telefonoProfesor, administradorProfesor);
-					System.out.println("La persona con dni " + dni + " se ha encontrado.");
 					
 					return profesorActual;
 				} else {
