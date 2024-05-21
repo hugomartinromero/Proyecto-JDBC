@@ -2,12 +2,7 @@ package proyectoJDBC;
 
 public class Alumno extends Persona {
 	private String fechaNacimiento;
-
-	public Alumno(String fechaNacimiento) {
-		super();
-		this.fechaNacimiento = fechaNacimiento;
-	}
-
+	
 	public Alumno() {
 		super();
 	}

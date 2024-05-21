@@ -2,14 +2,18 @@ package proyectoJDBC;
 
 public class Modulo {
 	private String codigoModulo;
+	private String nombre;
 	private int numeroHoras;
+	private String dniProfesor;
 	
 	public Modulo() {
 	}
 	
-	public Modulo(String codigoModulo, int numeroHoras) {
+	public Modulo(String codigoModulo, String nombre, int numeroHoras, String dniProfesor) {
 		this.codigoModulo = codigoModulo;
+		this.nombre = nombre;
 		this.numeroHoras = numeroHoras;
+		this.dniProfesor = dniProfesor;
 	}
 
 	public String getCodigoModulo() {
@@ -20,6 +24,14 @@ public class Modulo {
 		this.codigoModulo = codigoModulo;
 	}
 
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
 	public int getNumeroHoras() {
 		return numeroHoras;
 	}
@@ -28,8 +40,22 @@ public class Modulo {
 		this.numeroHoras = numeroHoras;
 	}
 
+	public String getDniProfesor() {
+		return dniProfesor;
+	}
+
+	public void setDniProfesor(String dniProfesor) {
+		this.dniProfesor = dniProfesor;
+	}
+
 	@Override
 	public String toString() {
-		return "Modulo [codigoModulo=" + codigoModulo + ", numeroHoras=" + numeroHoras + "]";
+		String cadena = "\n------------------------------------------";
+		cadena += "\nCódigo módulo: " + this.codigoModulo;
+		cadena += "\nNombre: " + this.nombre;
+		cadena += "\nNº de Horas: " + this.numeroHoras;
+		cadena += "\nDNI Profesor: " + this.dniProfesor;
+		cadena += "\n------------------------------------------";
+		return cadena;
 	}
 }

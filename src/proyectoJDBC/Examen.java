@@ -3,17 +3,19 @@ package proyectoJDBC;
 public class Examen {
 	private String idExamen;
 	private String titulo;
-	private int numeroPreguntas;
-	private int fechaRealizacion;
-	
+	private int tema;
+	private String fechaRealizacion;
+	private int codigoModulo;
+
 	public Examen() {
 	}
 	
-	public Examen(String idExamen, String titulo, int numeroPreguntas, int fechaRealizacion) {
+	public Examen(String idExamen, String titulo, int tema, String fechaRealizacion, int codigoModulo) {
 		this.idExamen = idExamen;
 		this.titulo = titulo;
-		this.numeroPreguntas = numeroPreguntas;
+		this.tema = tema;
 		this.fechaRealizacion = fechaRealizacion;
+		this.codigoModulo = codigoModulo;
 	}
 
 	public String getIdExamen() {
@@ -32,25 +34,39 @@ public class Examen {
 		this.titulo = titulo;
 	}
 
-	public int getNumeroPreguntas() {
-		return numeroPreguntas;
+	public int getTema() {
+		return tema;
 	}
 
-	public void setNumeroPreguntas(int numeroPreguntas) {
-		this.numeroPreguntas = numeroPreguntas;
+	public void setTema(int tema) {
+		this.tema = tema;
 	}
 
-	public int getFechaRealizacion() {
+	public String getFechaRealizacion() {
 		return fechaRealizacion;
 	}
 
-	public void setFechaRealizacion(int fechaRealizacion) {
+	public void setFechaRealizacion(String fechaRealizacion) {
 		this.fechaRealizacion = fechaRealizacion;
+	}
+
+	public int getCodigoModulo() {
+		return codigoModulo;
+	}
+
+	public void setCodigoModulo(int codigoModulo) {
+		this.codigoModulo = codigoModulo;
 	}
 
 	@Override
 	public String toString() {
-		return "Examen [idExamen=" + idExamen + ", titulo=" + titulo + ", numeroPreguntas=" + numeroPreguntas
-				+ ", fechaRealizacion=" + fechaRealizacion + "]";
+		String cadena = "\n------------------------------------------";
+		cadena += "\nID Examen: " + this.idExamen;
+		cadena += "\nTítulo: " + this.titulo;
+		cadena += "\nTema: " + this.tema;
+		cadena += "\nFecha de realización: " + this.fechaRealizacion;
+		cadena += "\nCódigo módulo: " + this.codigoModulo;
+		cadena += "\n------------------------------------------";
+		return cadena;
 	}
 }
