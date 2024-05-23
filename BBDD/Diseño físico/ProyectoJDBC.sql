@@ -13,13 +13,13 @@ CREATE TABLE persona (
 CREATE TABLE alumno (
     dni VARCHAR(9) PRIMARY KEY,
     fechanacimiento DATE,
-    FOREIGN KEY (dni) REFERENCES persona(dni)
+    FOREIGN KEY (dni) REFERENCES persona(dni) ON DELETE CASCADE
 );
 
 CREATE TABLE profesor (
     dni VARCHAR(9) PRIMARY KEY,
     administrador BOOLEAN,
-    FOREIGN KEY (dni) REFERENCES persona(dni)
+    FOREIGN KEY (dni) REFERENCES persona(dni) ON DELETE CASCADE
 );
 
 CREATE TABLE cursoescolar (
@@ -57,7 +57,6 @@ CREATE TABLE examen (
     idexamen INT AUTO_INCREMENT PRIMARY KEY,
     titulo VARCHAR(100),
     tema INT,
-    fecharealizacicion DATE,
     codigoModulo INT,
     FOREIGN KEY (codigoModulo) REFERENCES modulo(codigoModulo)
 );

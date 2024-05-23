@@ -16,12 +16,12 @@ public class Profesor extends Persona {
 		}
 	}
 
-	public boolean getadministrador() {
-		return administrador;
+	public String getAdministrador() {
+		return (administrador) ? "1" : "0";
 	}
 
-	public void setespecialidad(boolean administrador) {
-		this.administrador = administrador;
+	public void setAdministrador(int administrador) {
+		this.administrador = (administrador == 0) ? false : true;
 	}
 
 	@Override

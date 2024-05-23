@@ -1,15 +1,15 @@
 package proyectoJDBC;
 
-public class CursoEscolar {
+public class Curso {
 	private int idCursoEscolar;
 	private String nombre;
 	private int anioInicio;
 	private int anioFin;
 	
-	public CursoEscolar() {
+	public Curso() {
 	}
 	
-	public CursoEscolar(int idCursoEscolar, String nombre, int anioInicio, int anioFin) {
+	public Curso(int idCursoEscolar, String nombre, int anioInicio, int anioFin) {
 		this.idCursoEscolar = idCursoEscolar;
 		this.nombre = nombre;
 		this.anioInicio = anioInicio;
@@ -50,7 +50,12 @@ public class CursoEscolar {
 
 	@Override
 	public String toString() {
-		return "CursoEscolar [idCursoEscolar=" + idCursoEscolar + ", nombre=" + nombre + ", anioInicio=" + anioInicio
-				+ ", anioFin=" + anioFin + "]";
+		String cadena = "\n------------------------------------------";
+		cadena += "\nID Curso Escolar: " + this.idCursoEscolar;
+		cadena += "\nNombre: " + this.nombre;
+		cadena += "\nAño inicio: " + this.anioInicio;
+		cadena += "\nAño fin: " + this.anioFin;
+		cadena += "\n------------------------------------------";
+		return cadena;
 	}
 }

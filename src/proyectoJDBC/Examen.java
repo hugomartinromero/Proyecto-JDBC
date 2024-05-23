@@ -1,28 +1,30 @@
 package proyectoJDBC;
 
+import java.util.ArrayList;
+
 public class Examen {
-	private String idExamen;
+	private int idExamen;
+	private int codigoModulo;
 	private String titulo;
 	private int tema;
-	private String fechaRealizacion;
-	private int codigoModulo;
+	private ArrayList<Pregunta> preguntas;
 
 	public Examen() {
 	}
 	
-	public Examen(String idExamen, String titulo, int tema, String fechaRealizacion, int codigoModulo) {
+	public Examen(int idExamen, String titulo, int tema, int codigoModulo, ArrayList<Pregunta> preguntas) {
 		this.idExamen = idExamen;
 		this.titulo = titulo;
 		this.tema = tema;
-		this.fechaRealizacion = fechaRealizacion;
 		this.codigoModulo = codigoModulo;
+		this.preguntas = preguntas;
 	}
 
-	public String getIdExamen() {
+	public int getIdExamen() {
 		return idExamen;
 	}
 
-	public void setIdExamen(String idExamen) {
+	public void setIdExamen(int idExamen) {
 		this.idExamen = idExamen;
 	}
 
@@ -42,14 +44,6 @@ public class Examen {
 		this.tema = tema;
 	}
 
-	public String getFechaRealizacion() {
-		return fechaRealizacion;
-	}
-
-	public void setFechaRealizacion(String fechaRealizacion) {
-		this.fechaRealizacion = fechaRealizacion;
-	}
-
 	public int getCodigoModulo() {
 		return codigoModulo;
 	}
@@ -58,14 +52,32 @@ public class Examen {
 		this.codigoModulo = codigoModulo;
 	}
 
+	public ArrayList<Pregunta> getPreguntas() {
+		return preguntas;
+	}
+
+	public void setPreguntas(ArrayList<Pregunta> preguntas) {
+		this.preguntas = preguntas;
+	}
+
 	@Override
 	public String toString() {
 		String cadena = "\n------------------------------------------";
 		cadena += "\nID Examen: " + this.idExamen;
+		cadena += "\nCódigo módulo: " + this.codigoModulo;
 		cadena += "\nTítulo: " + this.titulo;
 		cadena += "\nTema: " + this.tema;
-		cadena += "\nFecha de realización: " + this.fechaRealizacion;
-		cadena += "\nCódigo módulo: " + this.codigoModulo;
+		cadena += "\nPreguntas: ";
+		if (preguntas != null) {
+			for (Pregunta pregunta : preguntas) {
+				if (pregunta != null) {
+					cadena += "\n\t" + pregunta.getEnunciado();
+					cadena += "\n\t" + pregunta.getRespuestaCorrecta();
+				}
+			}
+		} else {
+			cadena += "\nNo hay preguntas.";
+		}
 		cadena += "\n------------------------------------------";
 		return cadena;
 	}

@@ -75,13 +75,13 @@ VALUES
 ('33333333L', 1),
 ('44444444M', 1);
 
-INSERT INTO examen (titulo, tema, fecharealizacicion, codigoModulo) 
+INSERT INTO examen (titulo, tema, codigoModulo) 
 VALUES 
-('Examen de Base de datos', 1, NOW(), '0484'),
-('Examen de Entornos de desarrollo', 3, NOW(), '0487'),
-('Examen de Lenguajes de marcas y sistemas de gestión de información', 2, NOW(), '0373'),
-('Examen de Programación', 5, NOW(), '0485'),
-('Examen de Sistemas informáticos', 4, NOW(), '0483');
+('Examen de Base de datos', 1, '0484'),
+('Examen de Entornos de desarrollo', 3, '0487'),
+('Examen de Lenguajes de marcas y sistemas de gestión de información', 2, '0373'),
+('Examen de Programación', 5, '0485'),
+('Examen de Sistemas informáticos', 4, '0483');
 
 INSERT INTO preguntas (examenid, enunciado, respuestacorrecta) 
 VALUES 

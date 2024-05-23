@@ -1,15 +1,15 @@
 package proyectoJDBC;
 
-public class Preguntas {
+public class Pregunta {
 	private int idPregunta;
 	private int idExamen;
 	private String enunciado;
 	private String respuestaCorrecta;
 	
-	public Preguntas() {
+	public Pregunta() {
 	}
 	
-	public Preguntas(int idPregunta, int idExamen, String enunciado, String respuestaCorrecta) {
+	public Pregunta(int idPregunta, int idExamen, String enunciado, String respuestaCorrecta) {
 		super();
 		this.idPregunta = idPregunta;
 		this.idExamen = idExamen;
