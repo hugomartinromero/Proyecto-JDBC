@@ -69,7 +69,7 @@ public class ExamenDAO {
 		return examen;
 	}
 	
-	public ArrayList<Examen> buscarExamenesPorAsignatura(String nombre) {
+	public ArrayList<Examen> buscarExamenesPorModulo(String nombre) {
 		ArrayList<Examen> examenes = new ArrayList<>();
 		String selectQuery = "SELECT idexamen, titulo, tema, codigoModulo FROM examen "
 				+ "WHERE codigoModulo = (SELECT codigoModulo FROM modulo WHERE nombre = ?)";
@@ -113,7 +113,7 @@ public class ExamenDAO {
 	public void crearExamen(Examen examen) {
         String insertExamenQuery = "INSERT INTO examen (titulo, tema, codigoModulo) VALUES (?, ?, ?)";
         String insertPreguntaQuery = "INSERT INTO preguntas (examenid, enunciado, respuestacorrecta) VALUES (?, ?, ?)";
-        String obtenerExamenIdQuery = "SELECT LAST_INSERT_ID() AS id"; // Buscado en internet
+        String obtenerExamenIdQuery = "SELECT idexamen FROM examen ORDER BY idexamen DESC LIMIT 1";
 
         try {
             PreparedStatement examenStatement = conexion.prepareStatement(insertExamenQuery);
