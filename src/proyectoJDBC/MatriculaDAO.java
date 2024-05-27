@@ -60,7 +60,25 @@ public class MatriculaDAO {
             System.out.println("Error al matricular al alumno: " + e.getMessage());
         }
     }
+	
+	public void anularMatricula(Alumno alumno, Curso curso) {
+		if (!alumnoEstaMatriculado(alumno, curso)) {
+            System.out.println("El alumno no está matriculado en este curso.");
+            return;
+        }
+		
+        String query = "DELETE FROM matricula WHERE alumnodni = ? AND cursoescolarid = ?";
 
+        try (PreparedStatement statement = conexion.prepareStatement(query)) {
+            statement.setString(1, alumno.getDni());
+            statement.setInt(2, curso.getIdCursoEscolar());
+            statement.executeUpdate();
+            
+            System.out.println("Matricula anulada.");
+        } catch (SQLException e) {
+            System.out.println("Error al anular la matrícula del alumno: " + e.getMessage());
+        }
+    }
 	private boolean alumnoEstaMatriculado(Alumno alumno, Curso curso) {
 	    String query = "SELECT COUNT(*) FROM matricula WHERE alumnodni = ? AND cursoescolarid = ?";
 	    

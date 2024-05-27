@@ -31,6 +31,42 @@ public class ExamenDAO {
 
 		return con;
 	}
+	public Examen buscarExamenPorId(int id) {
+		Examen examen = new Examen();
+		String query = "SELECT idexamen, titulo, tema, codigoModulo FROM examen WHERE idexamen = ?";
+		String preguntasQuery = "SELECT idpregunta, enunciado, respuestacorrecta FROM preguntas WHERE examenid = ?";
+
+		try (PreparedStatement statement = conexion.prepareStatement(query)) {
+			statement.setInt(1, id);
+			try (ResultSet rs = statement.executeQuery()) {
+				while (rs.next()) {
+					examen.setIdExamen(rs.getInt("idexamen"));
+					examen.setTitulo(rs.getString("titulo"));
+					examen.setTema(rs.getInt("tema"));
+					examen.setCodigoModulo(rs.getInt("codigoModulo"));
+					
+					ArrayList<Pregunta> preguntas = new ArrayList<>();
+	                try (PreparedStatement preguntasStatement = conexion.prepareStatement(preguntasQuery)) {
+	                    preguntasStatement.setInt(1, examen.getIdExamen());
+	                    try (ResultSet rsPreguntas = preguntasStatement.executeQuery()) {
+	                        while (rsPreguntas.next()) {
+	                            Pregunta pregunta = new Pregunta();
+	                            pregunta.setIdPregunta(rsPreguntas.getInt("idpregunta"));
+	                            pregunta.setEnunciado(rsPreguntas.getString("enunciado"));
+	                            pregunta.setRespuestaCorrecta(rsPreguntas.getString("respuestacorrecta"));
+	                            preguntas.add(pregunta);
+	                        }
+	                    }
+	                }
+	                examen.setPreguntas(preguntas);
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println("Error al buscar el examen por el tema: " + e.getMessage());
+		}
+
+		return examen;
+	}
 	
 	public Examen buscarExamenPorTema(int tema) {
 		Examen examen = new Examen();

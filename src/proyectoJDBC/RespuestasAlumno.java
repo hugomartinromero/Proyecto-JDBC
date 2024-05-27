@@ -1,7 +1,7 @@
 package proyectoJDBC;
 
 public class RespuestasAlumno {
-	private String idAlumno;
+	private String dniAlumno;
 	private int idPregunta;
 	private String respuestaDada;
 	private double nota;
@@ -10,18 +10,18 @@ public class RespuestasAlumno {
 	}
 	
 	public RespuestasAlumno(String idAlumno, int idPregunta, String respuestaDada, double nota) {
-		this.idAlumno = idAlumno;
+		this.dniAlumno = idAlumno;
 		this.idPregunta = idPregunta;
 		this.respuestaDada = respuestaDada;
 		this.nota = nota;
 	}
 
 	public String getIdAlumno() {
-		return idAlumno;
+		return dniAlumno;
 	}
 
 	public void setIdAlumno(String idAlumno) {
-		this.idAlumno = idAlumno;
+		this.dniAlumno = idAlumno;
 	}
 
 	public int getIdPregunta() {
@@ -51,7 +51,7 @@ public class RespuestasAlumno {
 	@Override
 	public String toString() {
 		String cadena = "\n------------------------------------------";
-		cadena += "\nID Alumno: " + this.idAlumno;
+		cadena += "\nDNI Alumno: " + this.dniAlumno;
 		cadena += "\nID Pregunta: " + this.idPregunta;
 		cadena += "\nRespuesta Alumno: " + this.respuestaDada;
 		cadena += "\nNota: " + this.nota;
