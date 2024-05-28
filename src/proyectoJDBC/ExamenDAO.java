@@ -43,7 +43,7 @@ public class ExamenDAO {
 					examen.setIdExamen(rs.getInt("idexamen"));
 					examen.setTitulo(rs.getString("titulo"));
 					examen.setTema(rs.getInt("tema"));
-					examen.setCodigoModulo(rs.getInt("codigoModulo"));
+					examen.setCodigoModulo(rs.getString("codigoModulo"));
 					
 					ArrayList<Pregunta> preguntas = new ArrayList<>();
 	                try (PreparedStatement preguntasStatement = conexion.prepareStatement(preguntasQuery)) {
@@ -80,7 +80,7 @@ public class ExamenDAO {
 					examen.setIdExamen(rs.getInt("idexamen"));
 					examen.setTitulo(rs.getString("titulo"));
 					examen.setTema(rs.getInt("tema"));
-					examen.setCodigoModulo(rs.getInt("codigoModulo"));
+					examen.setCodigoModulo(rs.getString("codigoModulo"));
 					
 					ArrayList<Pregunta> preguntas = new ArrayList<>();
 	                try (PreparedStatement preguntasStatement = conexion.prepareStatement(preguntasQuery)) {
@@ -119,7 +119,7 @@ public class ExamenDAO {
 					examen.setIdExamen(rs.getInt("idexamen"));
 					examen.setTitulo(rs.getString("titulo"));
 					examen.setTema(rs.getInt("tema"));
-					examen.setCodigoModulo(rs.getInt("codigoModulo"));
+					examen.setCodigoModulo(rs.getString("codigoModulo"));
 					
 					ArrayList<Pregunta> preguntas = new ArrayList<>();
 	                try (PreparedStatement preguntasStatement = conexion.prepareStatement(preguntasQuery)) {
@@ -155,14 +155,14 @@ public class ExamenDAO {
             PreparedStatement examenStatement = conexion.prepareStatement(insertExamenQuery);
             examenStatement.setString(1, examen.getTitulo());
             examenStatement.setInt(2, examen.getTema());
-            examenStatement.setInt(3, examen.getCodigoModulo());
+            examenStatement.setString(3, examen.getCodigoModulo());
             examenStatement.executeUpdate();
 
             int examenId = -1;
             try (PreparedStatement obtenerIdStatement = conexion.prepareStatement(obtenerExamenIdQuery);
                  ResultSet resultSet = obtenerIdStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    examenId = resultSet.getInt("id");
+                    examenId = resultSet.getInt("idexamen");
                 }
             }
 

@@ -4,15 +4,22 @@ import java.util.ArrayList;
 
 public class Examen {
 	private int idExamen;
-	private int codigoModulo;
+	private String codigoModulo;
 	private String titulo;
 	private int tema;
 	private ArrayList<Pregunta> preguntas;
 
 	public Examen() {
 	}
-	
-	public Examen(int idExamen, String titulo, int tema, int codigoModulo, ArrayList<Pregunta> preguntas) {
+
+	public Examen(String titulo, int tema, String codigoModulo, ArrayList<Pregunta> preguntas) {
+		this.titulo = titulo;
+		this.tema = tema;
+		this.codigoModulo = codigoModulo;
+		this.preguntas = preguntas;
+	}
+
+	public Examen(int idExamen, String titulo, int tema, String codigoModulo, ArrayList<Pregunta> preguntas) {
 		this.idExamen = idExamen;
 		this.titulo = titulo;
 		this.tema = tema;
@@ -44,11 +51,11 @@ public class Examen {
 		this.tema = tema;
 	}
 
-	public int getCodigoModulo() {
+	public String getCodigoModulo() {
 		return codigoModulo;
 	}
 
-	public void setCodigoModulo(int codigoModulo) {
+	public void setCodigoModulo(String codigoModulo) {
 		this.codigoModulo = codigoModulo;
 	}
 

@@ -16,8 +16,8 @@ public class Profesor extends Persona {
 		}
 	}
 
-	public String getAdministrador() {
-		return (administrador) ? "1" : "0";
+	public boolean getAdministrador() {
+		return administrador;
 	}
 
 	public void setAdministrador(int administrador) {

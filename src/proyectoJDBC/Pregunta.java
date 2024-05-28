@@ -9,8 +9,12 @@ public class Pregunta {
 	public Pregunta() {
 	}
 	
+	public Pregunta(String enunciado, String respuestaCorrecta) {
+		this.enunciado = enunciado;
+		this.respuestaCorrecta = respuestaCorrecta;
+	}
+	
 	public Pregunta(int idPregunta, int idExamen, String enunciado, String respuestaCorrecta) {
-		super();
 		this.idPregunta = idPregunta;
 		this.idExamen = idExamen;
 		this.enunciado = enunciado;

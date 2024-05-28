@@ -93,5 +93,27 @@ public class CursoDAO {
 
         return cursos;
     }
-
+	
+	public ArrayList<Modulo> buscarModulosPorDniProfesor(String dniProfesor) {
+		String modulosQuery = "SELECT codigomodulo, nombre, numerohoras, profesordni FROM modulo WHERE profesordni = ?";
+		
+		ArrayList<Modulo> modulos = new ArrayList<>();
+        try (PreparedStatement modulosStatement = conexion.prepareStatement(modulosQuery)) {
+            modulosStatement.setString(1, dniProfesor);
+            try (ResultSet modulosrs = modulosStatement.executeQuery()) {
+                while (modulosrs.next()) {
+                    Modulo modulo = new Modulo();
+                    modulo.setCodigoModulo(modulosrs.getString("codigomodulo"));
+                    modulo.setNombre(modulosrs.getString("nombre"));
+                    modulo.setNumeroHoras(modulosrs.getInt("numerohoras"));
+                    modulo.setDniProfesor(modulosrs.getString("profesordni"));
+                    modulos.add(modulo);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al buscar los módulos por el nombre: " + e.getMessage());
+        }
+        
+        return modulos;
+	}
 }

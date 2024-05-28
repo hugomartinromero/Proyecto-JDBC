@@ -33,12 +33,11 @@ public class RespuestasDAO {
 	}
 	
 	public void insertarRespuestaAlumno(RespuestasAlumno respuestaAlumno) {
-        String query = "INSERT INTO respuestasAlumno (alumnodni, preguntaid, respuestadada, nota) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO respuestasAlumno (alumnodni, preguntaid, respuestadada) VALUES (?, ?, ?)";
         try (PreparedStatement statement = conexion.prepareStatement(query)) {
             statement.setString(1, respuestaAlumno.getIdAlumno());
             statement.setInt(2, respuestaAlumno.getIdPregunta());
             statement.setString(3, respuestaAlumno.getRespuestaDada());
-            statement.setDouble(4, respuestaAlumno.getNota());
             statement.executeUpdate();
             System.out.println("Respuesta del alumno insertada correctamente.");
         } catch (SQLException e) {
@@ -48,7 +47,7 @@ public class RespuestasDAO {
 
     public ArrayList<RespuestasAlumno> buscarRespuestasPorAlumno(String idAlumno) {
     	ArrayList<RespuestasAlumno> respuestasAlumno = new ArrayList<>();
-        String query = "SELECT alumnoid, preguntaid, respuestadada, nota FROM respuestasAlumno WHERE alumnodni = ?";
+        String query = "SELECT alumnoid, preguntaid, respuestadada FROM respuestasAlumno WHERE alumnodni = ?";
         try (PreparedStatement statement = conexion.prepareStatement(query)) {
             statement.setString(1, idAlumno);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -56,8 +55,7 @@ public class RespuestasDAO {
                     RespuestasAlumno respuesta = new RespuestasAlumno(
                             resultSet.getString("alumnodni"),
                             resultSet.getInt("preguntaid"),
-                            resultSet.getString("respuestadada"),
-                            resultSet.getDouble("nota")
+                            resultSet.getString("respuestadada")
                     );
                     respuestasAlumno.add(respuesta);
                 }

@@ -93,7 +93,7 @@ public class ProfesorDAO {
 			personaStatement.executeUpdate();
 
 			profesorStatement.setString(1, profesor.getDni());
-			profesorStatement.setString(2, profesor.getAdministrador());
+			profesorStatement.setString(2, (profesor.getAdministrador()) ? "1" : "0");
 			profesorStatement.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("Error al crear el profesor: " + e.getMessage());
@@ -107,7 +107,13 @@ public class ProfesorDAO {
 		try {
 			if ("administrador".equals(campo)) {
 				try (PreparedStatement profesorStatement = conexion.prepareStatement(updateProfesorQuery)) {
-					profesorStatement.setString(1, valorCampo);
+					
+					if (campo == "administrador") {
+						profesorStatement.setBoolean(1, (valorCampo == "true") ? true : false);
+					} else {
+						profesorStatement.setString(1, valorCampo);
+					}
+					
 					profesorStatement.setString(2, profesor.getDni());
 					profesorStatement.executeUpdate();
 				}

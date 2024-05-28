@@ -38,7 +38,7 @@ public class AlumnoDAO {
 				+ "FROM alumno " + "JOIN persona ON alumno.dni = persona.dni " + "WHERE persona.dni LIKE ?";
 
 		try (PreparedStatement statement = conexion.prepareStatement(query)) {
-			statement.setString(1, "%" + dni + "%");
+			statement.setString(1, dni);
 			try (ResultSet rs = statement.executeQuery()) {
 				while (rs.next()) {
 					alumno.setDni(rs.getString("dni"));

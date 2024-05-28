@@ -73,7 +73,6 @@ CREATE TABLE respuestasAlumno (
     alumnodni VARCHAR(9),
     preguntaid INT,
     respuestadada VARCHAR(1000),
-    nota DECIMAL(5, 2),
     PRIMARY KEY (alumnodni, preguntaid),
     FOREIGN KEY (alumnodni) REFERENCES alumno(dni),
     FOREIGN KEY (preguntaid) REFERENCES preguntas(idpregunta)
