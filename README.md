@@ -30,3 +30,6 @@ El proyecto tiene como objetivo proporcionar una plataforma para administrar y g
 ### Gestión Administrativa:
 
 - Ofrece funciones administrativas adicionales, como la generación de informes académicos, la gestión de usuarios y permisos, y la configuración del sistema.
+
+## Posibles mejoras
+- Añadir y calcular notas a los exámenes.
