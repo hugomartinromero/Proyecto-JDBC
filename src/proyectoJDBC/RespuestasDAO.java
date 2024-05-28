@@ -67,7 +67,7 @@ public class RespuestasDAO {
      */
     public ArrayList<RespuestasAlumno> buscarRespuestasPorAlumno(String idAlumno) {
     	ArrayList<RespuestasAlumno> respuestasAlumno = new ArrayList<>();
-        String query = "SELECT alumnoid, preguntaid, respuestadada FROM respuestasAlumno WHERE alumnodni = ?";
+        String query = "SELECT alumnodni, preguntaid, respuestadada FROM respuestasAlumno WHERE alumnodni = ?";
         try (PreparedStatement statement = conexion.prepareStatement(query)) {
             statement.setString(1, idAlumno);
             try (ResultSet resultSet = statement.executeQuery()) {

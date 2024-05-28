@@ -92,6 +92,8 @@ public class App {
 		} else if (esSi(esProfesor)) {
 			if (profesorActual.getDni() != null) {
 				int opcionProfesor = 0;
+				
+				boolean salir = false;
 
 				do {
 					if (profesorActual.getAdministrador()) {
@@ -147,13 +149,14 @@ public class App {
 							break;
 						case 5:
 							System.out.println("Saliendo...");
+							salir = true;
 							break;
 						default:
 							System.out.println("Opción incorrecta.");
 							break;
 						}
 					}
-				} while (opcionProfesor != 6);
+				} while (opcionProfesor != 6 || !salir);
 			} else {
 				System.out.println("Error al conectarse.");
 			}
@@ -167,7 +170,7 @@ public class App {
      * @param opcion La opción ingresada por el usuario.
      * @return true si la opción es 'si', 'sí' o 's'; false en caso contrario.
      */
-	private static boolean esSi(String opcion) {
+	public static boolean esSi(String opcion) {
 		return (opcion != null)
 				&& (opcion.equalsIgnoreCase("si") || opcion.equalsIgnoreCase("sí") || opcion.equalsIgnoreCase("s"));
 	}
@@ -435,7 +438,7 @@ public class App {
 				System.out.println("Opción incorrecta.");
 				break;
 			}
-		} while (opcion != 6);
+		} while (opcion != 4);
 	}
 
 	/**
@@ -581,19 +584,20 @@ public class App {
 		RespuestasDAO respuestasDAO = new RespuestasDAO();
 
 		System.out.println("Escribe el id del examen que quieras realizar.");
-		int id = sc.nextInt();
-		sc.nextLine();
+		String id = sc.nextLine();
 
-		Examen examen = examenDAO.buscarExamenPorId(id);
+		if (!id.equalsIgnoreCase("salir")) {
+			Examen examen = examenDAO.buscarExamenPorId(Integer.parseInt(id));
 
-		for (int i = 0; i < examen.getPreguntas().size(); i++) {
-			System.out.println(examen.getPreguntas().get(i).getEnunciado());
-			String respuesta = sc.nextLine();
+			for (int i = 0; i < examen.getPreguntas().size(); i++) {
+				System.out.println(examen.getPreguntas().get(i).getEnunciado());
+				String respuesta = sc.nextLine();
 
-			RespuestasAlumno respuestaAlumno = new RespuestasAlumno(alumnoActual.getDni(),
-					examen.getPreguntas().get(i).getIdPregunta(), respuesta);
+				RespuestasAlumno respuestaAlumno = new RespuestasAlumno(alumnoActual.getDni(),
+						examen.getPreguntas().get(i).getIdPregunta(), respuesta);
 
-			respuestasDAO.insertarRespuestaAlumno(respuestaAlumno);
+				respuestasDAO.insertarRespuestaAlumno(respuestaAlumno);
+			}
 		}
 	}
 
