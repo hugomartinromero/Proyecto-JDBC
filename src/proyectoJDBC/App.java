@@ -9,11 +9,7 @@ public class App {
 		Scanner sc = new Scanner(System.in);
 
 		AlumnoDAO alumnoDAO = new AlumnoDAO();
-		CursoDAO cursoDAO = new CursoDAO();
-		ExamenDAO examenDAO = new ExamenDAO();
-		MatriculaDAO matriculaDAO = new MatriculaDAO();
 		ProfesorDAO profesorDAO = new ProfesorDAO();
-		RespuestasDAO respuestasDAO = new RespuestasDAO();
 
 		Alumno alumnoActual = null;
 		Profesor profesorActual = null;
@@ -87,6 +83,7 @@ public class App {
 		} else if (esSi(esProfesor)) {
 			if (profesorActual.getDni() != null) {
 				int opcionProfesor = 0;
+
 				do {
 					if (profesorActual.getAdministrador()) {
 						System.out.println("1. Administrar alumnos.");
@@ -152,96 +149,13 @@ public class App {
 				System.out.println("Error al conectarse.");
 			}
 		}
+
+		sc.close();
 	}
 
-	private static void administrarProfesores(Profesor profesorActual) {
-		Scanner sc = new Scanner(System.in);
-
-		ProfesorDAO profesorDAO = new ProfesorDAO();
-
-		int opcion;
-
-		do {
-			System.out.println("1. Crear profesor");
-			System.out.println("2. Modificar profesor.");
-			System.out.println("3. Eliminar profesor.");
-			System.out.println("4. Salir.");
-			System.out.println("Introduce una opción (1-4).");
-			opcion = sc.nextInt();
-			sc.nextLine();
-
-			switch (opcion) {
-			case 1:
-				crearProfesor(profesorDAO);
-				break;
-			case 2, 3:
-				System.out.println("¿Quieres buscar por DNI o por nombre? (Escribe 'salir' para salir).");
-				String opcionBuscar = sc.nextLine();
-
-				Profesor profesor = new Profesor();
-
-				switch (opcionBuscar) {
-				case "dni", "DNI":
-					System.out.println("Escribe el DNI del profesor.");
-					String dni = sc.nextLine();
-
-					profesor = profesorDAO.buscarProfesorPorDni(dni);
-					break;
-				case "nombre", "Nombre":
-					System.out.println("Escribe el nombre del profesor.");
-					String nombre = sc.nextLine();
-
-					profesor = profesorDAO.buscarProfesoresPorNombre(nombre).get(0);
-					break;
-				case "salir":
-					System.out.println("Saliendo...");
-					break;
-				default:
-					System.out.println("Opción incorrecta.");
-					break;
-				}
-
-				switch (opcion) {
-				case 2:
-					modificarProfesor(profesor);
-					break;
-				case 3:
-					profesorDAO.eliminarProfesor(profesor);
-					break;
-				default:
-					System.out.println("Opción incorrecta.");
-					break;
-				}
-				break;
-			case 4:
-				System.out.println("Saliendo...");
-				break;
-			default:
-				System.out.println("Opción incorrecta.");
-				break;
-			}
-		} while (opcion != 6);
-	}
-
-	private static void crearProfesor(ProfesorDAO profesorDAO) {
-		Scanner sc = new Scanner(System.in);
-
-		System.out.println("Escribe el DNI.");
-		String dni = sc.nextLine();
-
-		System.out.println("Escribe el nombre.");
-		String nombre = sc.nextLine();
-
-		System.out.println("Escribe los apellidos.");
-		String apellidos = sc.nextLine();
-
-		System.out.println("Escribe el teléfono.");
-		String telefono = sc.nextLine();
-
-		System.out.println("¿Es administrador?");
-		String administrador = sc.nextLine();
-
-		profesorDAO.crearProfesor(new Profesor(dni, nombre, apellidos, telefono, administrador));
+	private static boolean esSi(String opcion) {
+		return (opcion != null)
+				&& (opcion.equalsIgnoreCase("si") || opcion.equalsIgnoreCase("sí") || opcion.equalsIgnoreCase("s"));
 	}
 
 	private static void administrarAlumnos(Profesor profesorActual) {
@@ -342,95 +256,6 @@ public class App {
 		alumnoDAO.crearAlumno(new Alumno(dni, nombre, apellidos, telefono, fechaNacimiento));
 	}
 
-	private static void modificarProfesor(Profesor profesorActual) {
-		Scanner sc = new Scanner(System.in);
-
-		ProfesorDAO profesorDAO = new ProfesorDAO();
-
-		String[] campo = { "nombre", "apellidos", "telefono", "administrador" };
-
-		int opcion;
-
-		do {
-			System.out.println("¿Qué quieres modificar?");
-			System.out.println("1. Nombre.");
-			System.out.println("2. Apellidos.");
-			System.out.println("3. Teléfono.");
-			System.out.println("4. Administrador.");
-			System.out.println("5. Salir.");
-			System.out.println("Introduce una opción (1-5).");
-
-			opcion = sc.nextInt();
-			sc.nextLine();
-			switch (opcion) {
-			case 1, 2, 3:
-				System.out.println("Escribe el nuevo " + campo[opcion - 1] + ".");
-				String valorNuevo = sc.nextLine();
-
-				profesorDAO.modificarProfesor(profesorActual, campo[opcion - 1], valorNuevo);
-				break;
-			case 5:
-				System.out.println("Saliendo...");
-				break;
-			default:
-				System.out.println("Opción incorrecta.");
-				break;
-			}
-		} while (opcion != 5);
-	}
-
-	private static void crearExamen(Profesor profesorActual) {
-		Scanner sc = new Scanner(System.in);
-
-		CursoDAO cursoDAO = new CursoDAO();
-		ExamenDAO examenDAO = new ExamenDAO();
-
-		System.out.println("Escribe el título del examen.");
-		String titulo = sc.nextLine();
-
-		System.out.println("Escribe el tema.");
-		int tema = sc.nextInt();
-		sc.nextLine();
-
-		examenDAO.crearExamen(new Examen(titulo, tema,
-				cursoDAO.buscarModulosPorDniProfesor(profesorActual.getDni()).get(0).getCodigoModulo(),
-				pedirPreguntasExamen()));
-	}
-
-	private static ArrayList<Pregunta> pedirPreguntasExamen() {
-		Scanner sc = new Scanner(System.in);
-
-		ArrayList<Pregunta> preguntas = new ArrayList<>();
-
-		String enunciado;
-		String respuesta;
-
-		do {
-			System.out.println("Escribe el enunciado (Escribe 'fin' para salir).");
-			enunciado = sc.nextLine();
-			if (!enunciado.equalsIgnoreCase("fin")) {
-				System.out.println("Escribe la respuesta correcta.");
-				respuesta = sc.nextLine();
-				preguntas.add(new Pregunta(enunciado, respuesta));
-			}
-		} while (!enunciado.equalsIgnoreCase("fin"));
-
-		return preguntas;
-	}
-
-	private static void buscarRespuestasAlumno(Profesor profesorActual) {
-		Scanner sc = new Scanner(System.in);
-
-		RespuestasDAO respuestasDAO = new RespuestasDAO();
-
-		System.out.println("Introduce el DNI del alumno.");
-		String dniAlumno = sc.nextLine();
-
-		for (RespuestasAlumno respuestas : respuestasDAO.buscarRespuestasPorAlumno(dniAlumno)) {
-			System.out.println(respuestas);
-		}
-	}
-
 	private static void modificarAlumno(Alumno alumnoActual) {
 		Scanner sc = new Scanner(System.in);
 
@@ -448,9 +273,9 @@ public class App {
 			System.out.println("4. Fecha de nacimiento.");
 			System.out.println("5. Salir.");
 			System.out.println("Introduce una opción (1-5).");
-
 			opcion = sc.nextInt();
 			sc.nextLine();
+
 			switch (opcion) {
 			case 1, 2, 3, 4:
 				System.out.println("Escribe el nuevo " + campo[opcion - 1] + ".");
@@ -504,6 +329,210 @@ public class App {
 		} while (!cursoMatricula.getNombre().equalsIgnoreCase(curso));
 
 		matriculaDAO.anularMatricula(alumnoActual, cursoMatricula);
+	}
+
+	private static void administrarProfesores(Profesor profesorActual) {
+		Scanner sc = new Scanner(System.in);
+
+		ProfesorDAO profesorDAO = new ProfesorDAO();
+
+		int opcion;
+
+		do {
+			System.out.println("1. Crear profesor");
+			System.out.println("2. Modificar profesor.");
+			System.out.println("3. Eliminar profesor.");
+			System.out.println("4. Salir.");
+			System.out.println("Introduce una opción (1-4).");
+			opcion = sc.nextInt();
+			sc.nextLine();
+
+			switch (opcion) {
+			case 1:
+				crearProfesor(profesorDAO);
+				break;
+			case 2, 3:
+				System.out.println("¿Quieres buscar por DNI o por nombre? (Escribe 'salir' para salir).");
+				String opcionBuscar = sc.nextLine();
+
+				Profesor profesor = new Profesor();
+
+				switch (opcionBuscar) {
+				case "dni", "DNI":
+					System.out.println("Escribe el DNI del profesor.");
+					String dni = sc.nextLine();
+
+					profesor = profesorDAO.buscarProfesorPorDni(dni);
+					break;
+				case "nombre", "Nombre":
+					System.out.println("Escribe el nombre del profesor.");
+					String nombre = sc.nextLine();
+
+					profesor = profesorDAO.buscarProfesoresPorNombre(nombre).get(0);
+					break;
+				case "salir":
+					System.out.println("Saliendo...");
+					break;
+				default:
+					System.out.println("Opción incorrecta.");
+					break;
+				}
+
+				switch (opcion) {
+				case 2:
+					modificarProfesor(profesor);
+					break;
+				case 3:
+					profesorDAO.eliminarProfesor(profesor);
+					break;
+				default:
+					System.out.println("Opción incorrecta.");
+					break;
+				}
+				break;
+			case 4:
+				System.out.println("Saliendo...");
+				break;
+			default:
+				System.out.println("Opción incorrecta.");
+				break;
+			}
+		} while (opcion != 6);
+	}
+
+	private static void crearProfesor(ProfesorDAO profesorDAO) {
+		Scanner sc = new Scanner(System.in);
+
+		System.out.println("Escribe el DNI.");
+		String dni = sc.nextLine();
+
+		System.out.println("Escribe el nombre.");
+		String nombre = sc.nextLine();
+
+		System.out.println("Escribe los apellidos.");
+		String apellidos = sc.nextLine();
+
+		System.out.println("Escribe el teléfono.");
+		String telefono = sc.nextLine();
+
+		System.out.println("¿Es administrador?");
+		String administrador = sc.nextLine();
+
+		profesorDAO.crearProfesor(new Profesor(dni, nombre, apellidos, telefono, administrador));
+	}
+
+	private static void modificarProfesor(Profesor profesorActual) {
+		Scanner sc = new Scanner(System.in);
+
+		ProfesorDAO profesorDAO = new ProfesorDAO();
+
+		String[] campo = { "nombre", "apellidos", "telefono", "administrador" };
+
+		int opcion;
+
+		do {
+			System.out.println("¿Qué quieres modificar?");
+			System.out.println("1. Nombre.");
+			System.out.println("2. Apellidos.");
+			System.out.println("3. Teléfono.");
+			System.out.println("4. Administrador.");
+			System.out.println("5. Salir.");
+			System.out.println("Introduce una opción (1-5).");
+			opcion = sc.nextInt();
+			sc.nextLine();
+
+			switch (opcion) {
+			case 1, 2, 3:
+				System.out.println("Escribe el nuevo " + campo[opcion - 1] + ".");
+				String valorNuevo = sc.nextLine();
+
+				profesorDAO.modificarProfesor(profesorActual, campo[opcion - 1], valorNuevo);
+				break;
+			case 5:
+				System.out.println("Saliendo...");
+				break;
+			default:
+				System.out.println("Opción incorrecta.");
+				break;
+			}
+		} while (opcion != 5);
+	}
+
+	private static void crearExamen(Profesor profesorActual) {
+		Scanner sc = new Scanner(System.in);
+
+		CursoDAO cursoDAO = new CursoDAO();
+		ExamenDAO examenDAO = new ExamenDAO();
+
+		System.out.println("Escribe el título del examen.");
+		String titulo = sc.nextLine();
+
+		System.out.println("Escribe el tema.");
+		int tema = sc.nextInt();
+		sc.nextLine();
+
+		examenDAO.crearExamen(new Examen(titulo, tema,
+				cursoDAO.buscarModulosPorDniProfesor(profesorActual.getDni()).get(0).getCodigoModulo(),
+				pedirPreguntasExamen()));
+	}
+
+	private static ArrayList<Pregunta> pedirPreguntasExamen() {
+		Scanner sc = new Scanner(System.in);
+
+		ArrayList<Pregunta> preguntas = new ArrayList<>();
+
+		String enunciado;
+		String respuesta;
+
+		do {
+			System.out.println("Escribe el enunciado (Escribe 'fin' para salir).");
+			enunciado = sc.nextLine();
+
+			if (!enunciado.equalsIgnoreCase("fin")) {
+				System.out.println("Escribe la respuesta correcta.");
+				respuesta = sc.nextLine();
+
+				preguntas.add(new Pregunta(enunciado, respuesta));
+			}
+		} while (!enunciado.equalsIgnoreCase("fin"));
+
+		return preguntas;
+	}
+
+	private static void buscarRespuestasAlumno(Profesor profesorActual) {
+		Scanner sc = new Scanner(System.in);
+
+		RespuestasDAO respuestasDAO = new RespuestasDAO();
+
+		System.out.println("Introduce el DNI del alumno.");
+		String dniAlumno = sc.nextLine();
+
+		for (RespuestasAlumno respuestas : respuestasDAO.buscarRespuestasPorAlumno(dniAlumno)) {
+			System.out.println(respuestas);
+		}
+	}
+
+	private static void realizarExamen(Alumno alumnoActual) {
+		Scanner sc = new Scanner(System.in);
+
+		ExamenDAO examenDAO = new ExamenDAO();
+		RespuestasDAO respuestasDAO = new RespuestasDAO();
+
+		System.out.println("Escribe el id del examen que quieras realizar.");
+		int id = sc.nextInt();
+		sc.nextLine();
+
+		Examen examen = examenDAO.buscarExamenPorId(id);
+
+		for (int i = 0; i < examen.getPreguntas().size(); i++) {
+			System.out.println(examen.getPreguntas().get(i).getEnunciado());
+			String respuesta = sc.nextLine();
+
+			RespuestasAlumno respuestaAlumno = new RespuestasAlumno(alumnoActual.getDni(),
+					examen.getPreguntas().get(i).getIdPregunta(), respuesta);
+
+			respuestasDAO.insertarRespuestaAlumno(respuestaAlumno);
+		}
 	}
 
 	private static void listar() {
@@ -675,33 +704,5 @@ public class App {
 				break;
 			}
 		} while (!salir);
-	}
-
-	private static void realizarExamen(Alumno alumnoActual) {
-		Scanner sc = new Scanner(System.in);
-
-		ExamenDAO examenDAO = new ExamenDAO();
-		RespuestasDAO respuestasDAO = new RespuestasDAO();
-
-		System.out.println("Escribe el id del examen que quieras realizar.");
-		int id = sc.nextInt();
-		sc.nextLine();
-
-		Examen examen = examenDAO.buscarExamenPorId(id);
-
-		for (int i = 0; i < examen.getPreguntas().size(); i++) {
-			System.out.println(examen.getPreguntas().get(i).getEnunciado());
-			String respuesta = sc.nextLine();
-
-			RespuestasAlumno respuestaAlumno = new RespuestasAlumno(alumnoActual.getDni(),
-					examen.getPreguntas().get(i).getIdPregunta(), respuesta);
-
-			respuestasDAO.insertarRespuestaAlumno(respuestaAlumno);
-		}
-	}
-
-	private static boolean esSi(String opcion) {
-		return (opcion != null)
-				&& (opcion.equalsIgnoreCase("si") || opcion.equalsIgnoreCase("sí") || opcion.equalsIgnoreCase("s"));
 	}
 }
