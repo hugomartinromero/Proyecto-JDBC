@@ -105,14 +105,26 @@ DELIMITER ;
 SELECT calcularEdad('77777777G');
 
 -- Triggers
--- 1. Trigger para actualizar el número de teléfono de una persona.
+-- 1. Trigger que asegura que el número de alumnos matriculados en un curso se corresponda con el número de alumnos de la tabla cursoescolar.
 DELIMITER $$
-CREATE TRIGGER actualizarNumeroAlumnosDespuesDelete
+CREATE TRIGGER actualizarNumeroAlumnosDespuesDeleteMatricula
 AFTER DELETE ON matricula
 FOR EACH ROW
 BEGIN
     UPDATE cursoescolar
     SET numAlumnos = (SELECT COUNT(*) FROM matricula WHERE cursoescolarid = OLD.cursoescolarid)
     WHERE idcursoescolar = OLD.cursoescolarid;
+END $$
+DELIMITER ;
+
+-- 2. Trigger qeu verifica que la fecha de nacimiento no sea futura
+DELIMITER $$
+CREATE TRIGGER verificaFechaAntesInsertAlumno
+BEFORE INSERT ON alumno
+FOR EACH ROW
+BEGIN
+    IF NEW.fechaNacimiento > CURDATE() THEN
+        SET NEW.fechaNacimiento = CURDATE();
+    END IF;
 END $$
 DELIMITER ;
