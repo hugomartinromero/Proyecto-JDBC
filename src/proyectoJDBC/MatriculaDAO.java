@@ -6,6 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * La clase MatriculaDAO proporciona métodos para interactuar con la tabla de matrículas en la base de datos.
+ */
 public class MatriculaDAO {
 	private Connection conexion;
 
@@ -14,10 +17,17 @@ public class MatriculaDAO {
 	private final String MAQUINA = "localhost";
 	private final String BD = "proyectoJDBC";
 
+	/**
+     * Constructor de la clase MatriculaDAO. Establece la conexión con la base de datos.
+     */
 	public MatriculaDAO() {
 		conexion = conectar();
 	}
 
+	/**
+     * Establece la conexión con la base de datos.
+     * @return La conexión establecida.
+     */
 	private Connection conectar() {
 		Connection con = null;
 		String url = "jdbc:mysql://" + MAQUINA + "/" + BD;
@@ -31,6 +41,11 @@ public class MatriculaDAO {
 		return con;
 	}
 	
+	/**
+     * Matricula a un alumno en un curso escolar.
+     * @param alumno El alumno a matricular.
+     * @param curso El curso en el que matricular al alumno.
+     */
 	public void matricularAlumno(Alumno alumno, Curso curso) {
         if (curso == null) {
             System.out.println("El curso no existe.");
@@ -61,6 +76,11 @@ public class MatriculaDAO {
         }
     }
 	
+	/**
+     * Anula la matrícula de un alumno en un curso escolar.
+     * @param alumno El alumno cuya matrícula se va a anular.
+     * @param curso El curso del que se va a anular la matrícula del alumno.
+     */
 	public void anularMatricula(Alumno alumno, Curso curso) {
 		if (!alumnoEstaMatriculado(alumno, curso)) {
             System.out.println("El alumno no está matriculado en este curso.");
@@ -79,6 +99,13 @@ public class MatriculaDAO {
             System.out.println("Error al anular la matrícula del alumno: " + e.getMessage());
         }
     }
+	
+	/**
+     * Verifica si un alumno está matriculado en un curso escolar.
+     * @param alumno El alumno a verificar.
+     * @param curso El curso escolar a verificar.
+     * @return true si el alumno está matriculado en el curso, false en caso contrario.
+     */
 	private boolean alumnoEstaMatriculado(Alumno alumno, Curso curso) {
 	    String query = "SELECT COUNT(*) FROM matricula WHERE alumnodni = ? AND cursoescolarid = ?";
 	    

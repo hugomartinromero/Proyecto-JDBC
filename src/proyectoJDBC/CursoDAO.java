@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * La clase CursoDAO proporciona métodos para acceder y manipular datos relacionados con los cursos en la base de datos.
+ */
 public class CursoDAO {
 	private Connection conexion;
 
@@ -15,10 +18,17 @@ public class CursoDAO {
 	private final String MAQUINA = "localhost";
 	private final String BD = "proyectoJDBC";
 
+	/**
+     * Constructor de la clase CursoDAO que establece una conexión con la base de datos.
+     */
 	public CursoDAO() {
 		conexion = conectar();
 	}
 
+	/**
+     * Establece una conexión con la base de datos.
+     * @return La conexión establecida.
+     */
 	private Connection conectar() {
 		Connection con = null;
 		String url = "jdbc:mysql://" + MAQUINA + "/" + BD;
@@ -32,6 +42,11 @@ public class CursoDAO {
 		return con;
 	}
 
+	/**
+     * Busca cursos por nombre en la base de datos.
+     * @param nombre El nombre o parte del nombre del curso a buscar.
+     * @return Una lista de cursos que coinciden con el nombre especificado.
+     */
 	public ArrayList<Curso> buscarCursosPorNombre(String nombre) {
         ArrayList<Curso> cursos = new ArrayList<>();
         String query = "SELECT idcursoescolar, nombre, anioinicio, aniofin FROM cursoescolar WHERE nombre LIKE ?";
@@ -94,6 +109,11 @@ public class CursoDAO {
         return cursos;
     }
 	
+	/**
+     * Busca módulos por el DNI del profesor en la base de datos.
+     * @param dniProfesor El DNI del profesor.
+     * @return Una lista de módulos impartidos por el profesor especificado.
+     */
 	public ArrayList<Modulo> buscarModulosPorDniProfesor(String dniProfesor) {
 		String modulosQuery = "SELECT codigomodulo, nombre, numerohoras, profesordni FROM modulo WHERE profesordni = ?";
 		

@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * La clase RespuestasDAO proporciona métodos para interactuar con la tabla de respuestas de la base de datos.
+ */
 public class RespuestasDAO {
 	private Connection conexion;
 
@@ -15,10 +18,18 @@ public class RespuestasDAO {
 	private final String MAQUINA = "localhost";
 	private final String BD = "proyectoJDBC";
 
+	/**
+     * Constructor de la clase RespuestasDAO que establece la conexión con la base de datos.
+     */
+	
 	public RespuestasDAO() {
 		conexion = conectar();
 	}
 
+	/**
+     * Establece la conexión con la base de datos.
+     * @return La conexión establecida.
+     */
 	private Connection conectar() {
 		Connection con = null;
 		String url = "jdbc:mysql://" + MAQUINA + "/" + BD;
@@ -32,6 +43,10 @@ public class RespuestasDAO {
 		return con;
 	}
 	
+	/**
+     * Inserta una respuesta dada por un alumno en la base de datos.
+     * @param respuestaAlumno La respuesta dada por el alumno.
+     */
 	public void insertarRespuestaAlumno(RespuestasAlumno respuestaAlumno) {
         String query = "INSERT INTO respuestasAlumno (alumnodni, preguntaid, respuestadada) VALUES (?, ?, ?)";
         try (PreparedStatement statement = conexion.prepareStatement(query)) {
@@ -45,6 +60,11 @@ public class RespuestasDAO {
         }
     }
 
+	/**
+     * Busca las respuestas dadas por un alumno en la base de datos.
+     * @param idAlumno El DNI del alumno.
+     * @return Una lista de respuestas dadas por el alumno.
+     */
     public ArrayList<RespuestasAlumno> buscarRespuestasPorAlumno(String idAlumno) {
     	ArrayList<RespuestasAlumno> respuestasAlumno = new ArrayList<>();
         String query = "SELECT alumnoid, preguntaid, respuestadada FROM respuestasAlumno WHERE alumnodni = ?";
@@ -66,5 +86,4 @@ public class RespuestasDAO {
         
         return respuestasAlumno;
 	}
-
 }

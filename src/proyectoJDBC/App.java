@@ -3,8 +3,17 @@ package proyectoJDBC;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * La clase App es la clase principal de la aplicación que gestiona la interacción con las personas
+ * y coordina las operaciones relacionadas con alumnos y profesores.
+ */
 public class App {
-
+	/**
+     * Método principal de la aplicación que solicita al usuario que ingrese su DNI y
+     * determina si es un alumno o un profesor para iniciar la interacción correspondiente.
+     * 
+     * @param args Los argumentos de la línea de comandos (no utilizados en este caso).
+     */
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 
@@ -152,12 +161,21 @@ public class App {
 
 		sc.close();
 	}
-
+	
+	/**
+     * Método privado que verifica si la respuesta dada por el usuario es 'si'.
+     * @param opcion La opción ingresada por el usuario.
+     * @return true si la opción es 'si', 'sí' o 's'; false en caso contrario.
+     */
 	private static boolean esSi(String opcion) {
 		return (opcion != null)
 				&& (opcion.equalsIgnoreCase("si") || opcion.equalsIgnoreCase("sí") || opcion.equalsIgnoreCase("s"));
 	}
 
+	/**
+     * Método privado para administrar alumnos: crear, modificar, eliminar, matricular o anular matrícula.
+     * @param profesorActual El profesor que realiza la administración.
+     */
 	private static void administrarAlumnos(Profesor profesorActual) {
 		Scanner sc = new Scanner(System.in);
 
@@ -235,6 +253,10 @@ public class App {
 		} while (opcion != 6);
 	}
 
+	/**
+     * Método privado para crear un nuevo alumno.
+     * @param alumnoDAO El objeto DAO para realizar operaciones relacionadas con alumnos.
+     */
 	private static void crearAlumno(AlumnoDAO alumnoDAO) {
 		Scanner sc = new Scanner(System.in);
 
@@ -256,6 +278,10 @@ public class App {
 		alumnoDAO.crearAlumno(new Alumno(dni, nombre, apellidos, telefono, fechaNacimiento));
 	}
 
+	/**
+     * Método privado para modificar los datos de un alumno.
+     * @param alumnoActual El alumno que se va a modificar.
+     */
 	private static void modificarAlumno(Alumno alumnoActual) {
 		Scanner sc = new Scanner(System.in);
 
@@ -293,6 +319,10 @@ public class App {
 		} while (opcion != 5);
 	}
 
+	/**
+     * Método privado para matricular a un alumno en un curso.
+     * @param alumnoActual El alumno que se va a matricular.
+     */
 	private static void matricularAlumno(Alumno alumnoActual) {
 		Scanner sc = new Scanner(System.in);
 
@@ -312,6 +342,10 @@ public class App {
 		matriculaDAO.matricularAlumno(alumnoActual, cursoMatricula);
 	}
 
+	/**
+     * Método privado para anular la matrícula de un alumno en un curso.
+     * @param alumnoActual El alumno cuya matrícula se va a anular.
+     */
 	private static void anularMatricula(Alumno alumnoActual) {
 		Scanner sc = new Scanner(System.in);
 
@@ -331,6 +365,10 @@ public class App {
 		matriculaDAO.anularMatricula(alumnoActual, cursoMatricula);
 	}
 
+	/**
+     * Método privado que permite al profesor administrar profesores: crear, modificar o eliminar.
+     * @param profesorActual El profesor que realiza la administración.
+     */
 	private static void administrarProfesores(Profesor profesorActual) {
 		Scanner sc = new Scanner(System.in);
 
@@ -400,6 +438,10 @@ public class App {
 		} while (opcion != 6);
 	}
 
+	/**
+     * Método privado para crear un nuevo profesor.
+     * @param profesorDAO El objeto DAO para realizar operaciones relacionadas con profesores.
+     */
 	private static void crearProfesor(ProfesorDAO profesorDAO) {
 		Scanner sc = new Scanner(System.in);
 
@@ -421,6 +463,10 @@ public class App {
 		profesorDAO.crearProfesor(new Profesor(dni, nombre, apellidos, telefono, administrador));
 	}
 
+	/**
+     * Método privado para modificar los datos de un profesor.
+     * @param profesorActual El profesor que se va a modificar.
+     */
 	private static void modificarProfesor(Profesor profesorActual) {
 		Scanner sc = new Scanner(System.in);
 
@@ -458,6 +504,10 @@ public class App {
 		} while (opcion != 5);
 	}
 
+	/**
+     * Método privado para crear un nuevo examen por parte de un profesor.
+     * @param profesorActual El profesor que crea el examen.
+     */
 	private static void crearExamen(Profesor profesorActual) {
 		Scanner sc = new Scanner(System.in);
 
@@ -476,6 +526,10 @@ public class App {
 				pedirPreguntasExamen()));
 	}
 
+	/**
+     * Método privado que solicita al usuario ingresar preguntas para un examen.
+     * @return Una lista de preguntas ingresadas por el usuario.
+     */
 	private static ArrayList<Pregunta> pedirPreguntasExamen() {
 		Scanner sc = new Scanner(System.in);
 
@@ -499,6 +553,10 @@ public class App {
 		return preguntas;
 	}
 
+	/**
+     * Método privado para buscar las respuestas de un alumno.
+     * @param profesorActual El profesor que realiza la búsqueda.
+     */
 	private static void buscarRespuestasAlumno(Profesor profesorActual) {
 		Scanner sc = new Scanner(System.in);
 
@@ -512,6 +570,10 @@ public class App {
 		}
 	}
 
+	/**
+     * Método privado para que un alumno realice un examen.
+     * @param alumnoActual El alumno que realiza el examen.
+     */
 	private static void realizarExamen(Alumno alumnoActual) {
 		Scanner sc = new Scanner(System.in);
 
@@ -535,6 +597,9 @@ public class App {
 		}
 	}
 
+	/**
+     * Método privado para listar información: alumnos, profesores, cursos o exámenes.
+     */
 	private static void listar() {
 		Scanner sc = new Scanner(System.in);
 
@@ -578,6 +643,10 @@ public class App {
 
 	}
 
+	/**
+     * Método privado para listar alumnos por DNI o nombre.
+     * @param alumnoDAO El objeto DAO para realizar las consultas de alumnos.
+     */
 	private static void listarAlumnos(AlumnoDAO alumnoDAO) {
 		Scanner sc = new Scanner(System.in);
 
@@ -611,6 +680,10 @@ public class App {
 		} while (!salir);
 	}
 
+	/**
+     * Método privado para listar profesores por DNI o nombre.
+     * @param profesorDAO El objeto DAO para realizar las consultas de profesores.
+     */
 	private static void listarProfesores(ProfesorDAO profesorDAO) {
 		Scanner sc = new Scanner(System.in);
 
@@ -644,6 +717,10 @@ public class App {
 		} while (!salir);
 	}
 
+	/**
+     * Método privado para listar cursos por nombre.
+     * @param cursoDAO El objeto DAO para realizar las consultas de cursos.
+     */
 	private static void listarCursos(CursoDAO cursoDAO) {
 		Scanner sc = new Scanner(System.in);
 
@@ -665,6 +742,10 @@ public class App {
 		} while (!salir);
 	}
 
+	/**
+     * Método privado para listar exámenes por tema, módulo o ID.
+     * @param examenDAO El objeto DAO para realizar las consultas de exámenes.
+     */
 	private static void listarExamenes(ExamenDAO examenDAO) {
 		Scanner sc = new Scanner(System.in);
 

@@ -7,6 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+
+/**
+ * La clase ExamenDAO proporciona métodos para acceder a la base de datos y realizar operaciones relacionadas con los exámenes.
+ */
 public class ExamenDAO {
 	private Connection conexion;
 
@@ -15,10 +19,17 @@ public class ExamenDAO {
 	private final String MAQUINA = "localhost";
 	private final String BD = "proyectoJDBC";
 
+	/**
+     * Constructor de la clase ExamenDAO que establece la conexión con la base de datos.
+     */
 	public ExamenDAO() {
 		conexion = conectar();
 	}
 
+	/**
+     * Establece la conexión con la base de datos.
+     * @return La conexión establecida.
+     */
 	private Connection conectar() {
 		Connection con = null;
 		String url = "jdbc:mysql://" + MAQUINA + "/" + BD;
@@ -31,6 +42,12 @@ public class ExamenDAO {
 
 		return con;
 	}
+	
+	/**
+     * Busca un examen por su ID en la base de datos.
+     * @param id El ID del examen a buscar.
+     * @return El examen encontrado.
+     */
 	public Examen buscarExamenPorId(int id) {
 		Examen examen = new Examen();
 		String query = "SELECT idexamen, titulo, tema, codigoModulo FROM examen WHERE idexamen = ?";
@@ -68,6 +85,11 @@ public class ExamenDAO {
 		return examen;
 	}
 	
+	/**
+     * Busca un examen por su tema en la base de datos.
+     * @param tema El tema del examen a buscar.
+     * @return El examen encontrado.
+     */
 	public Examen buscarExamenPorTema(int tema) {
 		Examen examen = new Examen();
 		String query = "SELECT idexamen, titulo, tema, codigoModulo FROM examen WHERE tema = ?";
@@ -105,6 +127,11 @@ public class ExamenDAO {
 		return examen;
 	}
 	
+	/**
+     * Busca exámenes por el nombre de un módulo en la base de datos.
+     * @param nombre El nombre del módulo.
+     * @return La lista de exámenes encontrados.
+     */
 	public ArrayList<Examen> buscarExamenesPorModulo(String nombre) {
 		ArrayList<Examen> examenes = new ArrayList<>();
 		String selectQuery = "SELECT idexamen, titulo, tema, codigoModulo FROM examen "
@@ -146,6 +173,10 @@ public class ExamenDAO {
 		return examenes;
 	}
 
+	/**
+     * Crea un nuevo examen en la base de datos.
+     * @param examen El examen a crear.
+     */
 	public void crearExamen(Examen examen) {
         String insertExamenQuery = "INSERT INTO examen (titulo, tema, codigoModulo) VALUES (?, ?, ?)";
         String insertPreguntaQuery = "INSERT INTO preguntas (examenid, enunciado, respuestacorrecta) VALUES (?, ?, ?)";

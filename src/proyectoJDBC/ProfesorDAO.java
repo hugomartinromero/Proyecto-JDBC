@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * La clase ProfesorDAO gestiona las operaciones de acceso a datos para la entidad Profesor en la base de datos.
+ */
 public class ProfesorDAO {
 	private Connection conexion;
 
@@ -15,10 +18,17 @@ public class ProfesorDAO {
 	private final String MAQUINA = "localhost";
 	private final String BD = "proyectoJDBC";
 
+	/**
+     * Constructor de la clase ProfesorDAO que establece la conexión con la base de datos.
+     */
 	public ProfesorDAO() {
 		conexion = conectar();
 	}
 
+	/**
+     * Establece la conexión con la base de datos.
+     * @return La conexión establecida.
+     */
 	private Connection conectar() {
 		Connection con = null;
 		String url = "jdbc:mysql://" + MAQUINA + "/" + BD;
@@ -32,6 +42,11 @@ public class ProfesorDAO {
 		return con;
 	}
 
+	/**
+     * Busca un profesor por su DNI en la base de datos.
+     * @param dni El DNI del profesor a buscar.
+     * @return El profesor encontrado, o un profesor vacío si no se encuentra.
+     */
 	public Profesor buscarProfesorPorDni(String dni) {
 		Profesor profesor = new Profesor();
 		String query = "SELECT persona.dni, persona.nombre, persona.apellidos, persona.telefono, profesor.administrador "
@@ -55,6 +70,11 @@ public class ProfesorDAO {
 		return profesor;
 	}
 
+	/**
+     * Busca profesores por su nombre en la base de datos.
+     * @param nombre El nombre o parte del nombre de los profesores a buscar.
+     * @return Una lista de profesores encontrados.
+     */
 	public ArrayList<Profesor> buscarProfesoresPorNombre(String nombre) {
 		ArrayList<Profesor> profesors = new ArrayList<>();
 		String query = "SELECT persona.dni, persona.nombre, persona.apellidos, persona.telefono, profesor.administrador "
@@ -80,6 +100,10 @@ public class ProfesorDAO {
 		return profesors;
 	}
 
+	/**
+     * Crea un nuevo profesor en la base de datos.
+     * @param profesor El profesor a crear.
+     */
 	public void crearProfesor(Profesor profesor) {
 		String insertPersonaQuery = "INSERT INTO persona (dni, nombre, apellidos, telefono) VALUES (?, ?, ?, ?)";
 		String insertProfesorQuery = "INSERT INTO profesor (dni, administrador) VALUES (?, ?)";
@@ -100,6 +124,12 @@ public class ProfesorDAO {
 		}
 	}
 
+	/**
+     * Modifica un profesor en la base de datos.
+     * @param profesor El profesor a modificar.
+     * @param campo El campo a modificar.
+     * @param valorCampo El nuevo valor del campo.
+     */
 	public void modificarProfesor(Profesor profesor, String campo, String valorCampo) {
 		String updatePersonaQuery = "UPDATE persona SET " + campo + " = ? WHERE dni = ?";
 		String updateProfesorQuery = "UPDATE profesor SET " + campo + " = ? WHERE dni = ?";
@@ -130,6 +160,10 @@ public class ProfesorDAO {
 		}
 	}
 
+	/**
+     * Elimina un profesor de la base de datos.
+     * @param profesor El profesor a eliminar.
+     */
 	public void eliminarProfesor(Profesor profesor) {
 		String deleteProfesorQuery = "DELETE FROM profesor WHERE dni = ?";
 		String deletePersonaQuery = "DELETE FROM persona WHERE dni = ?";
