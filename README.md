@@ -33,3 +33,5 @@ El proyecto tiene como objetivo proporcionar una plataforma para administrar y g
 
 ## Posibles mejoras
 - Añadir y calcular notas a los exámenes.
+- Añadir nota media a cada alumno.
+- Si un usuario aprueba más de la mitad de los módulos pasa directamente al siguiente módulo.
