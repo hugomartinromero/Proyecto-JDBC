@@ -89,7 +89,34 @@ public class App {
 				int opcionProfesor = 0;
 				do {
 					if (profesorActual.getAdministrador()) {
+						System.out.println("1. Administrar alumnos.");
+						System.out.println("2. Administrar profesores.");
+						System.out.println("3. Crear examen.");
+						System.out.println("4. Listar información.");
+						System.out.println("5. Salir.");
+						System.out.println("Introduce una opción (1-5).");
+						opcionProfesor = sc.nextInt();
 
+						switch (opcionProfesor) {
+						case 1:
+							administrarAlumnos(profesorActual);
+							break;
+						case 2:
+							administrarProfesores(profesorActual);
+							break;
+						case 3:
+							crearExamen(profesorActual);
+							break;
+						case 4:
+							listar();
+							break;
+						case 5:
+							System.out.println("Saliendo...");
+							break;
+						default:
+							System.out.println("Opción incorrecta.");
+							break;
+						}
 					} else {
 						System.out.println("1. Modificar profesor actual.");
 						System.out.println("2. Crear examen.");
@@ -125,6 +152,194 @@ public class App {
 				System.out.println("Error al conectarse.");
 			}
 		}
+	}
+
+	private static void administrarProfesores(Profesor profesorActual) {
+		Scanner sc = new Scanner(System.in);
+
+		ProfesorDAO profesorDAO = new ProfesorDAO();
+
+		int opcion;
+
+		do {
+			System.out.println("1. Crear profesor");
+			System.out.println("2. Modificar profesor.");
+			System.out.println("3. Eliminar profesor.");
+			System.out.println("4. Salir.");
+			System.out.println("Introduce una opción (1-4).");
+			opcion = sc.nextInt();
+			sc.nextLine();
+
+			switch (opcion) {
+			case 1:
+				crearProfesor(profesorDAO);
+				break;
+			case 2, 3:
+				System.out.println("¿Quieres buscar por DNI o por nombre? (Escribe 'salir' para salir).");
+				String opcionBuscar = sc.nextLine();
+
+				Profesor profesor = new Profesor();
+
+				switch (opcionBuscar) {
+				case "dni", "DNI":
+					System.out.println("Escribe el DNI del profesor.");
+					String dni = sc.nextLine();
+
+					profesor = profesorDAO.buscarProfesorPorDni(dni);
+					break;
+				case "nombre", "Nombre":
+					System.out.println("Escribe el nombre del profesor.");
+					String nombre = sc.nextLine();
+
+					profesor = profesorDAO.buscarProfesoresPorNombre(nombre).get(0);
+					break;
+				case "salir":
+					System.out.println("Saliendo...");
+					break;
+				default:
+					System.out.println("Opción incorrecta.");
+					break;
+				}
+
+				switch (opcion) {
+				case 2:
+					modificarProfesor(profesor);
+					break;
+				case 3:
+					profesorDAO.eliminarProfesor(profesor);
+					break;
+				default:
+					System.out.println("Opción incorrecta.");
+					break;
+				}
+				break;
+			case 4:
+				System.out.println("Saliendo...");
+				break;
+			default:
+				System.out.println("Opción incorrecta.");
+				break;
+			}
+		} while (opcion != 6);
+	}
+
+	private static void crearProfesor(ProfesorDAO profesorDAO) {
+		Scanner sc = new Scanner(System.in);
+
+		System.out.println("Escribe el DNI.");
+		String dni = sc.nextLine();
+
+		System.out.println("Escribe el nombre.");
+		String nombre = sc.nextLine();
+
+		System.out.println("Escribe los apellidos.");
+		String apellidos = sc.nextLine();
+
+		System.out.println("Escribe el teléfono.");
+		String telefono = sc.nextLine();
+
+		System.out.println("¿Es administrador?");
+		String administrador = sc.nextLine();
+
+		profesorDAO.crearProfesor(new Profesor(dni, nombre, apellidos, telefono, administrador));
+	}
+
+	private static void administrarAlumnos(Profesor profesorActual) {
+		Scanner sc = new Scanner(System.in);
+
+		AlumnoDAO alumnoDAO = new AlumnoDAO();
+
+		int opcion;
+
+		do {
+			System.out.println("1. Crear alumno");
+			System.out.println("2. Modificar alumno.");
+			System.out.println("3. Eliminar alumno.");
+			System.out.println("4. Matricular alumno.");
+			System.out.println("5. Anular matrícula.");
+			System.out.println("6. Salir.");
+			System.out.println("Introduce una opción (1-6).");
+			opcion = sc.nextInt();
+			sc.nextLine();
+
+			switch (opcion) {
+			case 1:
+				crearAlumno(alumnoDAO);
+				break;
+			case 2, 3, 4, 5:
+				System.out.println("¿Quieres buscar por DNI o por nombre? (Escribe 'salir' para salir).");
+				String opcionBuscar = sc.nextLine();
+
+				Alumno alumno = new Alumno();
+
+				switch (opcionBuscar) {
+				case "dni", "DNI":
+					System.out.println("Escribe el DNI del alumno.");
+					String dni = sc.nextLine();
+
+					alumno = alumnoDAO.buscarAlumnoPorDni(dni);
+					break;
+				case "nombre", "Nombre":
+					System.out.println("Escribe el nombre del alumno.");
+					String nombre = sc.nextLine();
+
+					alumno = alumnoDAO.buscarAlumnosPorNombre(nombre).get(0);
+					break;
+				case "salir":
+					System.out.println("Saliendo...");
+					break;
+				default:
+					System.out.println("Opción incorrecta.");
+					break;
+				}
+
+				switch (opcion) {
+				case 2:
+					modificarAlumno(alumno);
+					break;
+				case 3:
+					alumnoDAO.eliminarAlumno(alumno);
+					break;
+				case 4:
+					matricularAlumno(alumno);
+					break;
+				case 5:
+					anularMatricula(alumno);
+					break;
+				default:
+					System.out.println("Opción incorrecta.");
+					break;
+				}
+				break;
+			case 6:
+				System.out.println("Saliendo...");
+				break;
+			default:
+				System.out.println("Opción incorrecta.");
+				break;
+			}
+		} while (opcion != 6);
+	}
+
+	private static void crearAlumno(AlumnoDAO alumnoDAO) {
+		Scanner sc = new Scanner(System.in);
+
+		System.out.println("Escribe el DNI.");
+		String dni = sc.nextLine();
+
+		System.out.println("Escribe el nombre.");
+		String nombre = sc.nextLine();
+
+		System.out.println("Escribe los apellidos.");
+		String apellidos = sc.nextLine();
+
+		System.out.println("Escribe el teléfono.");
+		String telefono = sc.nextLine();
+
+		System.out.println("Escribe la fecha de nacimiento.");
+		String fechaNacimiento = sc.nextLine();
+
+		alumnoDAO.crearAlumno(new Alumno(dni, nombre, apellidos, telefono, fechaNacimiento));
 	}
 
 	private static void modificarProfesor(Profesor profesorActual) {
